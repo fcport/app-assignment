@@ -1,0 +1,125 @@
+<div class="flex flex-col items-center p-5">
+  <form class="flex flex-col" (ngSubmit)="onSubmit()" [formGroup]="enterForm">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input id="name" matInput placeholder="John Doe" formControlName="name" />
+    </mat-form-field>
+    <div
+      class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+      role="alert"
+      *ngIf="
+        submitted &&
+        enterForm.get('name')!.touched &&
+        enterForm.get('name')!.dirty &&
+        enterForm.get('name')!.hasError('numberInName')
+      "
+    >
+      Name can't contain numbers
+    </div>
+    <div
+      class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+      role="alert"
+      *ngIf="submitted && !enterForm.get('name')!.valid"
+    >
+      Name is required
+    </div>
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input
+        matInput
+        type="email"
+        placeholder="John@Doe.it"
+        formControlName="user"
+        id="user"
+      />
+    </mat-form-field>
+    <div
+      class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+      role="alert"
+      *ngIf="
+        submitted &&
+        enterForm.get('user')!.touched &&
+        enterForm.get('user')!.dirty &&
+        !enterForm.get('user')!.valid
+      "
+    >
+      Username must be a valid Email
+    </div>
+
+    <div formGroupName="location" class="flex flex-col">
+      <mat-form-field>
+        <mat-label>Country</mat-label>
+        <mat-select formControlName="country" id="country">
+          <mat-option
+            *ngFor="let country of countries; let first = first"
+            [value]="country"
+          >
+            {{ country }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Postcode</mat-label>
+        <input
+          matInput
+          placeholder=""
+          formControlName="postCode"
+          id="postcode"
+        />
+      </mat-form-field>
+      <div
+        class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+        role="alert"
+        *ngIf="
+          submitted &&
+          enterForm.get('location')!.hasError('invalidPostalCodeIreland')
+        "
+      >
+        Ireland postcode must be between 6 and 10 characters
+      </div>
+    </div>
+    <div
+      class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+      role="alert"
+      *ngIf="
+        submitted && enterForm.get('location')!.hasError('invalidPostalCodeUk')
+      "
+    >
+      Invalid UK postcode
+    </div>
+    <div
+      class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+      role="alert"
+      *ngIf="
+        submitted && enterForm.get('location')!.hasError('postalCodeUkNull')
+      "
+    >
+      UK postcode must be provided
+    </div>
+
+    <mat-form-field>
+      <mat-label>Favourite Movie</mat-label>
+
+      <input
+        type="text"
+        placeholder="Start Typing!"
+        aria-label="Favourite Movie"
+        matInput
+        formControlName="favouriteMovie"
+        id="favMovie"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let option of favouriteSuggestions$ | async"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <button mat-button color="primary" type="submit">Submit</button>
+  </form>
+</div>

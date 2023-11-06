@@ -1,0 +1,29 @@
+<div
+  class="flex flex-col p-5 items-center"
+  *ngIf="data$ | async as data; else noData"
+>
+  <h1 class="text-3xl">Here's the data!</h1>
+  <div class="flex flex-row items-center">
+    <span class="text-lg"> Name: </span> <span>{{ data.name }} </span>
+  </div>
+  <div class="flex flex-row items-center">
+    <span class="text-lg"> Username: </span>
+    <span>{{ data.username ?? "-" }} </span>
+  </div>
+  <div class="flex flex-row items-center">
+    <span class="text-lg"> Country: </span>
+    <span>{{ data.location.country }} </span>
+  </div>
+  <div class="flex flex-row items-center">
+    <span class="text-lg"> Postcode: </span>
+    <span> {{ data.location.postCode ?? "-" }} </span>
+  </div>
+  <div class="flex flex-row items-center">
+    <span class="text-lg"> Fav Movie: </span>
+    <span> {{ data.favouriteMovie ?? "-" }} </span>
+  </div>
+</div>
+
+<ng-template #noData>
+  <div>No data found ¯\_(ツ)_/¯</div>
+</ng-template>
