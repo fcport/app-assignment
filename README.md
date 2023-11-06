@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Starting the project
 
-After clonging the repository just run the following commands:
+After cloning the repository just run the following commands:
 
 1. `npm i`
 2. `npm run start`
